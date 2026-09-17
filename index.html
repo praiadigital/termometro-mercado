@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termômetro de Mercado | Praia Digital</title>
+<meta name="description" content="Índice de demanda de locação de temporada por cidade e mês no litoral paulista — saiba quando cobrar mais. Satélite de praia.digital.">
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;margin:0;background:#f8fafc;color:#0f172a;line-height:1.6}
+.hero{background:linear-gradient(135deg,#7f1d1d,#ef4444);color:#fff;padding:50px 20px;text-align:center}
+.container{max-width:1000px;margin:0 auto;padding:30px 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:#fff;border-radius:12px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.cta{display:inline-block;background:#fff;color:#0c4a6e;padding:10px 22px;border-radius:8px;text-decoration:none;font-weight:700;margin:6px}
+button{background:#0284c7;color:#fff;border:none;padding:10px 18px;border-radius:8px;font-weight:700;cursor:pointer}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;margin:6px 0;font-family:inherit}
+footer{text-align:center;padding:24px;color:#64748b;font-size:.9em}
+.bar{height:14px;border-radius:7px;background:linear-gradient(90deg,#0ea5e9,#0369a1)}
+</style>
+</head>
+<body>
+<nav style="background:#0c4a6e;padding:12px 20px;display:flex;gap:14px;flex-wrap:wrap;font-family:system-ui,sans-serif">
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praia.digital/">🌊 Praia Digital</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/apps/">Hub</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/hermes-agents/">Hermes Agents</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/area-anfitriao/">Anfitrião</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/simulador-roi/">ROI</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/simulador-credito/">Crédito</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/guia-litoral/">Guia</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/blog-litoral/">Blog</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/calculadoras/">Calculadoras</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/radar-precos/">Radar</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/mapa-investidor/">Mapa</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/concierge-ia/">Concierge IA</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/checklist-anfitriao/">Checklist</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/roteiro-litoral/">Roteiros</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/manual-hospede/">Manual</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/termometro-mercado/">Termômetro</a>
+<a style="color:#e0f2fe;text-decoration:none;font-weight:600" href="https://praiadigital.github.io/estudio-viabilidade/">Viabilidade</a>
+</nav>
+<div class="hero"><h1>🌡️ Termômetro de Mercado</h1><p>Índice de demanda de temporada por cidade e mês — planeje preços e disponibilidade.</p>
+<a class="cta" href="https://praiadigital.github.io/eventos-litoral/">🎉 Ver Eventos da temporada</a></div>
+<div class="container">
+<div class="card"><label><strong>Cidade:</strong></label>
+<select id="cidade" onchange="render()"><option>Guarujá</option><option>Santos</option><option>Bertioga</option><option>Praia Grande</option><option>Mongaguá</option><option>Itanhaém</option><option>Peruíbe</option><option>São Vicente</option></select></div>
+<div id="lista"></div>
+<div class="card"><h3>💰 Use a demanda a seu favor</h3><p>Nos meses quentes, aumente a diária e exija mínimo de noites. Simule o impacto no <a href="https://praiadigital.github.io/simulador-roi/">Simulador ROI</a> e nas <a href="https://praiadigital.github.io/calculadoras/">Calculadoras</a>.</p></div>
+</div>
+<script>
+const meses=["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+const base={
+"Guarujá":[98,90,55,60,35,30,70,35,40,50,60,95],
+"Santos":[95,88,60,62,40,35,72,40,45,55,62,92],
+"Bertioga":[97,89,50,58,30,28,68,32,38,48,58,94],
+"Praia Grande":[96,87,52,57,33,29,66,33,39,49,59,93],
+"Mongaguá":[92,84,48,52,28,25,60,28,34,44,54,88],
+"Itanhaém":[90,82,46,50,27,24,58,27,33,43,52,86],
+"Peruíbe":[88,80,44,48,26,23,56,26,32,42,50,85],
+"São Vicente":[89,81,45,49,27,24,57,27,33,43,51,86]};
+function cor(v){return v>=85?'#dc2626':v>=60?'#f97316':v>=40?'#eab308':'#38bdf8';}
+function render(){
+const c=document.getElementById('cidade').value,d=base[c];
+document.getElementById('lista').innerHTML='<div class="grid">'+meses.map((m,i)=>`<div class="card" style="text-align:center;border-top:6px solid ${cor(d[i])}"><h3 style="margin:0">${m}</h3><p style="font-size:1.8em;font-weight:800;color:${cor(d[i])};margin:6px 0">${d[i]}</p><div class="bar" style="width:${d[i]}%;background:${cor(d[i])}"></div><p style="color:#64748b;font-size:.85em">${d[i]>=85?'🔥 Altíssima':d[i]>=60?'☀️ Alta':d[i]>=40?'🌤️ Média':'❄️ Baixa'}</p></div>`).join('')+'</div>';}
+render();
+</script>
+<footer>© Praia Digital — 2026 — Satélite da rede <a href="https://praia.digital">praia.digital</a> · <a href="https://praiadigital.github.io/apps/">Ver todos os apps</a></footer>
+</body>
+</html>
